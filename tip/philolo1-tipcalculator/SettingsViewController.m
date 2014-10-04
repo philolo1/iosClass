@@ -58,6 +58,7 @@
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
   [defaults setObject:arr forKey:@"tips"];
+  [defaults synchronize];
 }
 
 - (void)viewDidLoad {

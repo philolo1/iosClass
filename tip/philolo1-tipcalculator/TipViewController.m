@@ -74,6 +74,7 @@
   if (!tipValues) {
     tipValues =  [@[@(0.1), @(0.15), @(0.2)] mutableCopy];
     [defaults setObject:tipValues forKey:@"tips"];
+    [defaults synchronize];
   }
   
   for (int n=0; n<3; n++) {
