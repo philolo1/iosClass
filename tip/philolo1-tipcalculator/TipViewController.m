@@ -6,7 +6,9 @@
 //  Copyright (c) 2014 Patrick Klitzke. All rights reserved.
 //
 
+#import "SettingsViewController.h"
 #import "TipViewController.h"
+
 
 @interface TipViewController ()
 @property (retain, nonatomic) IBOutlet UITextField *billTextField;
@@ -26,17 +28,26 @@
   }
   return self;
 }
-- (IBAction)selectionChanged:(id)sender {
+- (IBAction)selectionChanged:(id)sender
+{
   [self updateValues];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(onSettingsButton)];
     [self updateValues];
+  
     // Do any additional setup after loading the view from its nib.
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)onSettingsButton
+{
+  [self.navigationController pushViewController:[[SettingsViewController alloc] init] animated:YES];
+}
+
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -55,11 +66,33 @@
 {
   float billAmount = [self.billTextField.text floatValue];
   
-  NSArray *tipValues = @[@(0.1), @(0.15), @(0.2)];
+  
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  
+  NSMutableArray *tipValues = [defaults objectForKey:@"tips"];
+  
+  if (!tipValues) {
+    tipValues =  [@[@(0.1), @(0.15), @(0.2)] mutableCopy];
+    [defaults setObject:tipValues forKey:@"tips"];
+  }
+  
+  for (int n=0; n<3; n++) {
+    
+    float f = [[tipValues objectAtIndex:n] floatValue] * 100;
+    int num = f;
+    
+    [_tipControl setTitle:[NSString stringWithFormat:@"%d %%", num] forSegmentAtIndex:n];
+  }
+  
   float tipAmount = billAmount *[tipValues[self.tipControl.selectedSegmentIndex] floatValue];
   float total = tipAmount + billAmount;
   self.tipAmountLabel.text = [NSString stringWithFormat:@"$%.2f", tipAmount];
   self.totalAmountLabel.text = [NSString stringWithFormat:@"$%.2f", total];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [self updateValues];
 }
 
 
