@@ -10,6 +10,7 @@
 #import "MovieCell.h"
 #import "MovieDetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "SVProgressHUD.h"
 
 @interface MovieViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -20,10 +21,56 @@
 @implementation MovieViewController
 {
   NSArray *_movies;
+  UIRefreshControl *_refreshController;
 }
+
+
+- (void)loadDataWithUrl:(NSString *)myurl
+{
+  NSURL *url = [NSURL URLWithString:myurl];
+  
+  
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
+                                  initWithURL:url
+                                  cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                  timeoutInterval:30];
+  [request setHTTPMethod: @"GET"];
+  
+  [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+    
+    if (data == nil) {
+      _networkErrorView.hidden = NO;
+    } else {
+      _networkErrorView.hidden = YES;
+      NSDictionary *responseDictionary  = [NSJSONSerialization JSONObjectWithData:data
+                                                                          options:9
+                                                                            error:nil];
+      
+      _movies = responseDictionary[@"movies"];
+      [_refreshController endRefreshing];
+      [self.tableView reloadData];
+    }
+    
+    [SVProgressHUD dismiss];
+  }];
+}
+
+- (void)onRefresh
+{
+  [self loadDataWithUrl:@"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=qm8jefqegt4qzawhaw664wzc&limit=20&country=us"];
+}
+
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  _refreshController = [[UIRefreshControl alloc] init];
+  [_refreshController addTarget:self action:@selector(onRefresh) forControlEvents:UIControlEventValueChanged];
+  
+  [_tableView insertSubview:_refreshController atIndex:0];
+  
+  _networkErrorView.hidden = YES;
+  [SVProgressHUD show];
   
   self.title = @"Movies";
   self.tableView.delegate = self;
@@ -33,21 +80,7 @@
     // Do any additional setup after loading the view from its nib.
   [self.tableView registerNib:[UINib nibWithNibName:@"MovieCell" bundle:nil] forCellReuseIdentifier:@"MovieCell"];
   
-  NSURL *url = [NSURL URLWithString:@"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=qm8jefqegt4qzawhaw664wzc&limit=20&country=us"];
-  
-  NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-  [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-    
-    NSDictionary *responseDictionary  = [NSJSONSerialization JSONObjectWithData:data
-                                                                        options:9
-                                                                          error:nil];
-    
-    NSLog(@"response : %@", responseDictionary);
-    _movies = responseDictionary[@"movies"];
-    
-    [self.tableView reloadData];
-    
-  }];
+  [self loadDataWithUrl:@"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=qm8jefqegt4qzawhaw664wzc&limit=20&country=us"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,7 +90,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return 10;
+  return _movies.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -87,16 +120,10 @@
   
   [self.navigationController pushViewController:vc animated:YES];
 }
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)movieTap:(id)sender {
+  NSLog(@"movie Tap");
+  [_movieIconView setHighlighted:YES];
 }
-*/
+
 
 @end

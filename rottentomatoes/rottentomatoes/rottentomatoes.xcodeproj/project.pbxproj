@@ -20,6 +20,11 @@
 		C72C061D19EE0E5E008D838B /* MovieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C72C061B19EE0E5E008D838B /* MovieViewController.xib */; };
 		C72C062419EE1487008D838B /* MovieCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C72C062219EE1487008D838B /* MovieCell.m */; };
 		C72C062519EE1487008D838B /* MovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C72C062319EE1487008D838B /* MovieCell.xib */; };
+		C77093A019F397E800C9A55E /* warning.png in Resources */ = {isa = PBXBuildFile; fileRef = C770939F19F397E800C9A55E /* warning.png */; };
+		C77093A219F3AA7300C9A55E /* movie.png in Resources */ = {isa = PBXBuildFile; fileRef = C77093A119F3AA7300C9A55E /* movie.png */; };
+		C77093A419F3AB2000C9A55E /* movie_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = C77093A319F3AB2000C9A55E /* movie_highlighted.png */; };
+		C77093A619F3AB9300C9A55E /* dvd.png in Resources */ = {isa = PBXBuildFile; fileRef = C77093A519F3AB9300C9A55E /* dvd.png */; };
+		C77093A819F3ABB200C9A55E /* dvd_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = C77093A719F3ABB200C9A55E /* dvd_highlighted.png */; };
 		E1EA2311C4A33855C4F193F3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A3B300BE6A5C33B2872E40 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +63,11 @@
 		C72C062119EE1487008D838B /* MovieCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieCell.h; sourceTree = "<group>"; };
 		C72C062219EE1487008D838B /* MovieCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieCell.m; sourceTree = "<group>"; };
 		C72C062319EE1487008D838B /* MovieCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MovieCell.xib; sourceTree = "<group>"; };
+		C770939F19F397E800C9A55E /* warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = warning.png; path = ../../../../Desktop/warning.png; sourceTree = "<group>"; };
+		C77093A119F3AA7300C9A55E /* movie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = movie.png; path = ../../../../Downloads/movie.png; sourceTree = "<group>"; };
+		C77093A319F3AB2000C9A55E /* movie_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = movie_highlighted.png; path = ../../../../Downloads/movie_highlighted.png; sourceTree = "<group>"; };
+		C77093A519F3AB9300C9A55E /* dvd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dvd.png; path = ../../../../Downloads/dvd.png; sourceTree = "<group>"; };
+		C77093A719F3ABB200C9A55E /* dvd_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dvd_highlighted.png; path = ../../../../Downloads/dvd_highlighted.png; sourceTree = "<group>"; };
 		D80FD445F385E59F85A340AB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -120,6 +130,11 @@
 		C72C05EF19EE0E0D008D838B /* rottentomatoes */ = {
 			isa = PBXGroup;
 			children = (
+				C77093A719F3ABB200C9A55E /* dvd_highlighted.png */,
+				C77093A519F3AB9300C9A55E /* dvd.png */,
+				C77093A319F3AB2000C9A55E /* movie_highlighted.png */,
+				C77093A119F3AA7300C9A55E /* movie.png */,
+				C770939F19F397E800C9A55E /* warning.png */,
 				C72C05F419EE0E0D008D838B /* AppDelegate.h */,
 				C72C05F519EE0E0D008D838B /* AppDelegate.m */,
 				C72C05F719EE0E0D008D838B /* ViewController.h */,
@@ -249,11 +264,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C77093A619F3AB9300C9A55E /* dvd.png in Resources */,
 				C72C05FC19EE0E0D008D838B /* Main.storyboard in Resources */,
 				C72C060119EE0E0D008D838B /* LaunchScreen.xib in Resources */,
+				C77093A219F3AA7300C9A55E /* movie.png in Resources */,
 				C72C05FE19EE0E0D008D838B /* Images.xcassets in Resources */,
 				C72C061D19EE0E5E008D838B /* MovieViewController.xib in Resources */,
+				C77093A419F3AB2000C9A55E /* movie_highlighted.png in Resources */,
 				C70CC03119EE3D8700A493FA /* MovieDetailsViewController.xib in Resources */,
+				C77093A019F397E800C9A55E /* warning.png in Resources */,
+				C77093A819F3ABB200C9A55E /* dvd_highlighted.png in Resources */,
 				C72C062519EE1487008D838B /* MovieCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
