@@ -15,6 +15,30 @@
 
 @implementation MovieDetailsViewController
 
+- (NSString *) getImageURL
+{
+  return [_movie valueForKeyPath:@"posters.thumbnail"];
+}
+
+- (void) loadHighQualityImage
+{
+  NSLog(@"start replacing");
+  NSString *url = [[self getImageURL] stringByReplacingOccurrencesOfString:@"tmb" withString:@"ori"];
+  
+  
+  NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+  NSLog(@"Url : %@", url);
+  
+  
+  
+  [_backgroundView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    NSLog(@"better quality loaded!");
+    _backgroundView.image = image;
+  } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+    NSLog(@"Error %@", error);
+  }];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -23,9 +47,20 @@
   self.subtitleLabel.text = _movie[@"synopsis"];
   self.scrollView.contentSize = CGSizeMake(320, 1000);
   
+  
+  NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[self getImageURL]]
+                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                       timeoutInterval:60.0];
+  
+  [_backgroundView setImageWithURLRequest:request placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    NSLog(@"loaded !");
+    _backgroundView.image = image;
+    [self loadHighQualityImage];
+    
+    
+  } failure:nil];
+  
 
- NSString *posterUrl = [_movie valueForKeyPath:@"posters.thumbnail"];
- [_backgroundView setImageWithURL:[NSURL URLWithString:posterUrl]];
   _backgroundView.layer.zPosition = -1;
 }
 
